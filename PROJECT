@@ -1,0 +1,41 @@
+import pandas as pd
+
+expenses = [
+    {"date": "2024-12-01", "amount": 200, "description": "Groceries"},
+    {"date": "2024-12-02", "amount": 1500, "description": "Rent"},
+    {"date": "2024-12-03", "amount": 50, "description": "Coffee"},
+    {"date": "2024-12-04", "amount": 300, "description": "Utilities"},
+    {"date": "2024-12-05", "amount": 100, "description": "Transport"},
+]
+
+categories = {
+    "Groceries": "Food",
+    "Coffee": "Food",
+    "Rent": "Housing",
+    "Utilities": "Bills",
+    "Transport": "Travel",
+}
+
+df = pd.DataFrame(expenses)
+
+df["category"] = df["description"].map(categories)
+
+summary = df.groupby("category")["amount"].sum().reset_index()
+
+def suggest_saving_tips(summary):
+    tips = []
+    for _, row in summary.iterrows():
+        if row["amount"] > 500:
+            tips.append(f"Consider reducing your spending on {row['category']}.")
+        else:
+            tips.append(f"Good job managing your {row['category']} expenses!")
+    return tips
+
+saving_tips = suggest_saving_tips(summary)
+
+print("Expense Summary by Category:")
+print(summary)
+
+print("\nSaving Tips:")
+for tip in saving_tips:
+    print(f"- {tip}")
