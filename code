@@ -1,0 +1,72 @@
+import pandas as pd
+import datetime
+import matplotlib.pyplot as plt
+
+class PersonalFinanceAssistant:
+    def __init__(self):
+        self.transactions = []
+    
+    def add_transaction(self, category, amount, transaction_type):
+        """ Adds income or expense transactions """
+        transaction = {
+            'Date': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'Category': category,
+            'Amount': amount,
+            'Type': transaction_type
+        }
+        self.transactions.append(transaction)
+        print(f"Transaction added: {transaction}")
+    
+    def generate_report(self):
+        """ Generates a summary report of finances """
+        df = pd.DataFrame(self.transactions)
+        if df.empty:
+            print("No transactions found.")
+            return
+        
+        income = df[df['Type'] == 'Income']['Amount'].sum()
+        expenses = df[df['Type'] == 'Expense']['Amount'].sum()
+        balance = income - expenses
+        
+        print(f"Total Income: ${income}")
+        print(f"Total Expenses: ${expenses}")
+        print(f"Balance: ${balance}")
+        
+        return df
+    
+    def suggest_savings(self):
+        """ Suggests savings based on income and expenses """
+        df = pd.DataFrame(self.transactions)
+        if df.empty:
+            print("No data available for savings analysis.")
+            return
+        
+        income = df[df['Type'] == 'Income']['Amount'].sum()
+        expenses = df[df['Type'] == 'Expense']['Amount'].sum()
+        savings_potential = (income - expenses) * 0.20  # 20% savings rule
+        
+        print(f"Suggested Savings: ${savings_potential} per month.")
+    
+    def visualize_expenses(self):
+        """ Generates a bar chart of expense categories """
+        df = pd.DataFrame(self.transactions)
+        if df.empty:
+            print("No transactions to visualize.")
+            return
+        
+        expense_df = df[df['Type'] == 'Expense']
+        category_expenses = expense_df.groupby('Category')['Amount'].sum()
+        
+        category_expenses.plot(kind='bar', color='red', title='Expense Breakdown')
+        plt.xlabel('Category')
+        plt.ylabel('Amount ($)')
+        plt.show()
+
+assistant = PersonalFinanceAssistant()
+assistant.add_transaction("Salary", 5000, "Income")
+assistant.add_transaction("Rent", 1500, "Expense")
+assistant.add_transaction("Groceries", 300, "Expense")
+assistant.add_transaction("Stocks", 1000, "Investment")
+assistant.generate_report()
+assistant.suggest_savings()
+assistant.visualize_expenses()
