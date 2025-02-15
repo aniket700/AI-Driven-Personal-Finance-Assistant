@@ -1,0 +1,8 @@
+Transaction added: {'Date': '2025-02-16 01:33:46', 'Category': 'Salary', 'Amount': 5000, 'Type': 'Income'}
+Transaction added: {'Date': '2025-02-16 01:33:46', 'Category': 'Rent', 'Amount': 1500, 'Type': 'Expense'}
+Transaction added: {'Date': '2025-02-16 01:33:46', 'Category': 'Groceries', 'Amount': 300, 'Type': 'Expense'}
+Transaction added: {'Date': '2025-02-16 01:33:46', 'Category': 'Stocks', 'Amount': 1000, 'Type': 'Investment'}
+Total Income: $5000
+Total Expenses: $1800
+Balance: $3200
+Suggested Savings: $640.0 per month.
